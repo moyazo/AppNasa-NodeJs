@@ -1,0 +1,21 @@
+{
+  "name": "appnasa-nodejs",
+  "version": "1.0.0",
+  "description": "Back-end with express and node. Front-end with ejs files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon index.js",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moyazo/AppNasa-NodeJs.git"
+  },
+  "author": "Manuel Moya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moyazo/AppNasa-NodeJs/issues"
+  },
+  "homepage": "https://github.com/moyazo/AppNasa-NodeJs#readme"
+}
