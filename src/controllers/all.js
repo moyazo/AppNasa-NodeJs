@@ -1,9 +1,9 @@
-import Apod from "../models/apod.js";
-import Rover from "../models/rover.js";
-import User from "../models/user.js";
+const Apod = require("../models/apod.js");
+const Rover = require("../models/rover.js");
+const User = require("../models/user.js");
 
 
-export const getAll = async () => {
+const getAll = async () => {
     const apodList = await Apod.find();
     const roverList = await Rover.find();
     const userList = await User.find();
@@ -11,3 +11,6 @@ export const getAll = async () => {
         apodList, roverList, userList
     }
 }
+
+
+module.exports = getAll

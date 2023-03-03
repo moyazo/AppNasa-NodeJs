@@ -1,8 +1,7 @@
-import { Router } from "express";
-import { apiCallApod } from "../services/api.js";
-import Apod from "../models/apod.js";
-
-const routerApodsApi = Router();
+const express = require('express');
+const routerApodsApi = express.Router();
+const { apiCallApod } = require("../services/api.js");
+const Apod = require("../models/apod.js");
 
 routerApodsApi.get('/', async (req, res) => {
     try {
@@ -16,5 +15,4 @@ routerApodsApi.get('/', async (req, res) => {
     }
 })
 
-
-export default routerApodsApi
+module.exports = routerApodsApi;

@@ -1,5 +1,5 @@
-import User from "../models/user.js";
-import Rover from "../models/rover.js";
+const User = require("../models/user.js") ;
+const Rover = require("../models/rover.js");
 // import Apod from "../models/apod.js";
 
 const getUserList = async () => {
@@ -16,8 +16,12 @@ const getUserId = async (id) => {
 }
 
 const getUserByEmail = async (email) => {
-    const user = await User.findOne({ email })
-    return user
+    try {
+        const user = await User.findOne({ email })
+        return user 
+    } catch (error) {
+        console.log(error.message)
+    }
 }
 
 const createUser = async ({ name, email, password }) => {
@@ -74,4 +78,4 @@ const updateUserFavList = async ({ id, idNasa }) => {
 }
 
 
-export { getUserList, getUserId, getUserByEmail, createUser, updateUser, deleteUser, updateUserFavList }
+module.exports = { getUserList, getUserId, getUserByEmail, createUser, updateUser, deleteUser, updateUserFavList }

@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { apiCallRovers } from "../services/api.js";
-import Rover from "../models/rover.js";
-const routerApiRovers = Router();
+const express = require('express');
+const routerApiRovers = express.Router();
+const { apiCallRovers } = require("../services/api.js");
+const Rover = require("../models/rover.js");
 
 routerApiRovers.get('/', async (req, res) => {
     try {
@@ -16,5 +16,4 @@ routerApiRovers.get('/', async (req, res) => {
 })
 
 
-
-export default routerApiRovers
+module.exports = routerApiRovers

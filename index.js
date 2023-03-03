@@ -1,15 +1,15 @@
-import express from 'express';
-import { connectToDb } from './src/services/db.js';
-import bodyParser from 'body-parser';
-import routerApod from './src/routes/apod.js';
-import routerRover from './src/routes/rover.js';
-import routerUser from './src/routes/user.js';
-import routerAuth from './src/routes/auth.js'
-import routerAll from './src/routes/all.js';
-import routerApodsApi from './src/routes/syncApi.js';
-import routerApiRovers from './src/routes/syncApiRovers.js';
-import dotenv from 'dotenv';
-import { ensureAuthenticated } from './src/middleware/auth.js';
+const express = require('express');
+const connectToDb = require('./src/services/db.js');
+const bodyParser = require('body-parser');
+const routerApod = require('./src/routes/apod.js');
+const routerRover = require('./src/routes/rover.js');
+const routerUser = require('./src/routes/user.js');
+const routerAuth = require('./src/routes/auth.js');
+const routerAll = require('./src/routes/all.js');
+const routerApodsApi = require('./src/routes/syncApi.js');
+const routerApiRovers = require('./src/routes/syncApiRovers.js');
+const dotenv = require('dotenv');
+const { ensureAuthenticated } = require('./src/middleware/auth.js');
 
 
 dotenv.config();
@@ -25,7 +25,6 @@ const startApp = async () => {
     }));
 
     app.use(ensureAuthenticated)
-
     app.use('/auth', routerAuth)
     app.use('/users', routerUser)
     app.use('/all', routerAll);
@@ -35,6 +34,7 @@ const startApp = async () => {
     app.use('/sync-apiRovers', routerApiRovers);
 
     try {
+        await connectToDb();
         app.listen(port, () => {
             console.log(`App listening on port ${port}`);
         })

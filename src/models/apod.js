@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 
 const apodSchema = new mongoose.Schema({
@@ -24,10 +24,10 @@ const apodSchema = new mongoose.Schema({
         required: true,
 
     },
-})
+}, { collection: 'apods' })
 
 const Apod = mongoose.model('ApodApi', apodSchema,);
 
-export default Apod
+module.exports = Apod;
 
 

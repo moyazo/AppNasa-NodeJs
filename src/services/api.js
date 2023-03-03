@@ -1,6 +1,5 @@
-import fetch from 'node-fetch';
-import Apod from '../models/apod.js';
-import Rover from '../models/rover.js';
+const Apod = require('../models/apod.js');
+const Rover = require('../models/rover.js');
 
 async function apiCallApod() {
 
@@ -54,5 +53,5 @@ async function apiCallRovers() {
     //return [...roverFind, ...arrRoverCreation]
 }
 
-export { apiCallApod, apiCallRovers }
+module.exports = { apiCallApod, apiCallRovers };
 

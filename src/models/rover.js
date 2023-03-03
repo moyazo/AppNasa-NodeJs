@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require( "mongoose");
 
-export const roverSchema = new mongoose.Schema({
+const roverSchema = new mongoose.Schema({
 
     idNasa: {
         type: Number,
@@ -27,4 +27,4 @@ export const roverSchema = new mongoose.Schema({
 
 const Rover = mongoose.model('RoversApi', roverSchema);
 
-export default Rover 
+module.exports = Rover;

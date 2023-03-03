@@ -1,8 +1,9 @@
-import User from '../models/user.js';
-import bcrypt, { hash } from 'bcrypt';
-import jsonwebtoken from 'jsonwebtoken';
+const User = require('../models/user.js');
+const bcrypt = require('bcrypt');
+const { hash } = require('bcrypt');
+const jsonwebtoken = require('jsonwebtoken');
 const saltRounds = 10;
-import { getUserByEmail } from '../controllers/user.js';
+const { getUserByEmail } = require('../controllers/user.js');
 
 
 const signup = async ({ email, password }) => {
@@ -46,4 +47,4 @@ const login = async ({ email, password }) => {
 
 }
 
-export { signup, login }
+module.exports = { signup, login };

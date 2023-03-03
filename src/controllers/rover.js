@@ -1,4 +1,4 @@
-import Rover from "../models/rover.js";
+const Rover = require("../models/rover.js");
 
 const getRoverList = async () => {
 
@@ -54,4 +54,4 @@ const deleteRover = async ({ id }) => {
     return true
 }
 
-export { getRoverList, getRoverId, createRover, updateRover, deleteRover }
+module.exports = { getRoverList, getRoverId, createRover, updateRover, deleteRover }

@@ -1,6 +1,7 @@
-import { Router } from 'express';
-import { getRoverList, getRoverId, createRover, updateRover, deleteRover } from '../controllers/rover.js';
-const routerRover = Router()
+const express = require('express');
+const routerRover = express.Router();
+const { getRoverList, getRoverId, createRover, updateRover, deleteRover } = require('../controllers/rover.js');
+
 
 
 routerRover.get('/', async (req, res) => {
@@ -63,5 +64,5 @@ routerRover.delete('/:id', async (req, res) => {
 
 
 
-export default routerRover
+module.exports = routerRover
 

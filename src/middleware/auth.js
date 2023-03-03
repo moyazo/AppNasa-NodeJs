@@ -1,5 +1,5 @@
-import jsonwebtoken from 'jsonwebtoken';
-import User from '../models/user.js';
+const jsonwebtoken = require('jsonwebtoken');
+const User = require('../models/user.js');
 
 const ensureAuthenticated = async (req, res, next) => {
 
@@ -43,5 +43,5 @@ const ensureAuthenticated = async (req, res, next) => {
 }
 
 
-export { ensureAuthenticated }
+module.exports =  {ensureAuthenticated};
 
