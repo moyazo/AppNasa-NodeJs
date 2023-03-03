@@ -5,44 +5,52 @@ const getApodList = async () => {
         const apodList = await Apod.find();
         return apodList;
     } catch (error) {
-        console.log(error);
+        console.log("Error at bring apods " + error.message);
     }
 };
 
 const getApodId = async (id) => {
-    const apodId = await Apod.findById(id);
-    return apodId;
+    try {
+        if (!id) throw new Error("Cant find rover by id, id given null...");
+        const apodId = await Apod.findById(id);
+        return apodId;
+    } catch (error) {
+        console.log("Error at bring apod " + error.message);
+    }
 };
 
-const createApod = async ({ title, explanation, url, date }) => {
-    const exists = await Apod.find({ title, explanation, url, date });
-
-    const arrApodCreation = [];
-    const apodFind = await Apod.find();
-
+const createApod = async (data = { title, explanation, url, date }) => {
     try {
-        for (const item of exists) {
-            const exists = apodFind.find({ title, explanation, url, date });
-            if (!exists) {
-                arrApodCreation.push(item);
-            }
-        }
-        const apodPrueba = new Apod({ title, explanation, url, date });
-        return apodPrueba.save();
+        if (!data) throw new Error("Can not create not data given");
+        const exists = await Apod.find(data);
+        if(exists) return 'Apod already exists';
+        const newApod = new Apod(data);
+        Apod.create(newApod);
     } catch (error) {
-        console.log("DOCUMENTO YA ESTA CREADO");
+        console.log('Error at create apod ' + error.message);
     }
 };
 
 const updateApod = async (id, data) => {
-    const apodUpdate = await getApodId(id);
-    await apodUpdate.updateOne(data);
+    try {
+        if (!id) throw new Error("Cant find rover by id, id given null...");
+        if (!data) throw new Error("Can not create not data given");
+        const apodUpdate = await getApodId(id);
+        await apodUpdate.updateOne(data);
     return data;
+    } catch (error) {
+        console.log('Error at update apod ' + error.message);
+    }
 };
 
 const deleteApod = async ({ id }) => {
-    await Apod.findOneAndRemove({ id });
-    return true;
+    try {
+        if (!id) throw new Error("Cant find rover by id, id given null...");
+        await Apod.findOneAndRemove({ id });
+        return true;
+    } catch (error) {
+        console.log('Error at delete apod ' + error.message);
+    }
 };
 
 module.exports = { getApodList, getApodId, createApod, updateApod, deleteApod };

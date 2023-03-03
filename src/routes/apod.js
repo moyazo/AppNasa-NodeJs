@@ -8,53 +8,60 @@ const {
     deleteApod,
 } = require("../controllers/apod.js");
 
-routerApod.get("/", async (req, res) => {
+routerApod.get("/all-apods", async (req, res) => {
     try {
         const apods = await getApodList();
+        !apods && res.status(403).json('Apods not found...');
         res.status(200).json(apods);
     } catch (error) {
-        response.status(500);
+        response.status(500).json('Error 500 ' + error.message);
     }
 });
 
-routerApod.get("/:id", async (req, res) => {
+routerApod.get("/apodById/:id", async (req, res) => {
     try {
+        if(!req.params.id) res.status(502).json('params id not found...');
         const { id } = req.params;
-        const task = await getApodId(id);
-        res.status(200).json(task);
+        const apod = await getApodId(id);
+        if(!apod) res.status(403).json('Apod not found...');
+        res.status(200).json(apod);
     } catch (error) {
-        response.status(500);
+        response.status(500).json('Error 500 ' + error.message);
     }
 });
 
-routerApod.post("/", async (req, res) => {
+routerApod.post("/createApod", async (req, res) => {
     try {
+        if(!req.body) res.status(502).json('body not found...');
         const bodyData = req.body;
         const apod = await createApod(bodyData);
         res.status(200).json(apod);
     } catch (error) {
-        res.status(500).json("Document creation failed");
+        res.status(500).json("Apod creation failed");
     }
 });
 
-routerApod.put("/:id", async (req, res) => {
+routerApod.put("/updateApod/:id", async (req, res) => {
     try {
+        if(!req.params.id) res.status(502).json('params id not found...');
+        if(!req.body) res.status(502).json('body not found...');
         const { id } = req.params;
         const data = req.body;
         const task = await updateApod(id, data);
         res.status(200).json(task);
     } catch (error) {
-        res.status(500).json("Document update failed");
+        res.status(500).json("Apod update failed");
     }
 });
 
-routerApod.delete("/:id", async (req, res) => {
+routerApod.delete("/removeApod/:id", async (req, res) => {
     try {
+        if(!req.params.id) res.status(502).json('params id not found...');
         const { id } = req.params;
         await deleteApod(id);
-        res.status(200).json("Document deleted successfully");
+        res.status(200).json("Apod deleted successfully");
     } catch (error) {
-        response.status(500);
+        res.status(500).json("Apod deletion failed");
     }
 });
 
