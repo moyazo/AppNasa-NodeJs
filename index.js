@@ -1,6 +1,9 @@
+// IMPORTS
 const express = require('express');
-const connectToDb = require('./src/services/db.js');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+dotenv.config();
+// ROUTES
 const routerApod = require('./src/routes/apod.js');
 const routerRover = require('./src/routes/rover.js');
 const routerUser = require('./src/routes/user.js');
@@ -8,12 +11,14 @@ const routerAuth = require('./src/routes/auth.js');
 const routerAll = require('./src/routes/all.js');
 const routerApodsApi = require('./src/routes/syncApi.js');
 const routerApiRovers = require('./src/routes/syncApiRovers.js');
-const dotenv = require('dotenv');
+// SERVICES
 const { ensureAuthenticated } = require('./src/middleware/auth.js');
+const connectToDb = require('./src/services/db.js');
 
-
-dotenv.config();
-
+/**
+ * *startApp()*
+ * *This function objetive is that when you write the command yarn start or npm start, the app start up.*
+ * */
 const startApp = async () => {
     const app = express();
     const port = process.env.PORT;
@@ -23,13 +28,16 @@ const startApp = async () => {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-
+    // MIDDLEWARE
     app.use(ensureAuthenticated)
+    // AUTHENTICATION
     app.use('/auth', routerAuth)
+    // ROUTES OF COLLECTIONS(CRUD)
     app.use('/users', routerUser)
     app.use('/all', routerAll);
     app.use('/apods', routerApod);
     app.use('/rovers', routerRover);
+    // API SYNC
     app.use('/sync-api', routerApodsApi);
     app.use('/sync-apiRovers', routerApiRovers);
 
@@ -38,12 +46,10 @@ const startApp = async () => {
         app.listen(port, () => {
             console.log(`App listening on port ${port}`);
         })
-
     } catch (error) {
-        console.log(error)
+        console.log('Can not start up the App: ' + error.message)
         process.exit(1)
     }
 }
-
 
 startApp()
