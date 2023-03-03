@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 // ROUTES
 const routerApod = require('./src/routes/apod.js');
-const routerRover = require('./src/routes/rover.js');
 const routerUser = require('./src/routes/user.js');
 const routerAuth = require('./src/routes/auth.js');
 const routerAll = require('./src/routes/all.js');
