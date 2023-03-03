@@ -62,4 +62,3 @@ routerUser.get('/favBookList/:idUser', async (req, res) => {
 })
 
 module.exports = routerUser;
-

@@ -5,13 +5,12 @@ const Apod = require("../models/apod.js");
 
 routerApodsApi.get('/', async (req, res) => {
     try {
-
-        await apiCallApod()
-        await Apod.find()
-        const message = 'Data synchronize successfully'
-        res.status(200).json(message)
+        await apiCallApod();
+        const apods = await Apod.find();
+        if(!apods) res.status(403).json('Apods do not found...');
+        res.status(200).json(apods);
     } catch (error) {
-        res.status(500).json('No new documents found')
+        response.status(500).json('Error 500 at call apod Api ' + error.message);
     }
 })
 
