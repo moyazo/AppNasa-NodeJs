@@ -1,6 +1,6 @@
 const express = require('express');
 const routerAll = express.Router();
-const { getAll } = require('../controllers/all.js');
+const getAll = require('../controllers/all.js');
 
 
 routerAll.get('/', async (req, res) => {
