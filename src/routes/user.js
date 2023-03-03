@@ -33,11 +33,11 @@ routerUser.get('/:id', async (req, res) => {
         res.response.status(500).json('Error 500, ' + error.message);
     }
 });
-routerUser.post('/favRoverList/:idRover', async (req, res) => {
+routerUser.post('/favApodList/:idApod', async (req, res) => {
     try {
-        !req.params.idRover && res.status(403).json('ERROR 403, params idRover not found');
-        const { idRover } = req.params;
-        const user = await updateUserFavList({ id: req.user.id, idRover });
+        !req.params.idApod && res.status(403).json('ERROR 403, params idApod not found');
+        const { idApod } = req.params;
+        const user = await updateUserFavList({ id: req.user.id, idApod });
         if (!user) {
             return res.status(200).json("Data no exist in database");
         }
@@ -49,7 +49,7 @@ routerUser.post('/favRoverList/:idRover', async (req, res) => {
 });
 
 
-routerUser.get('/favBookList/:idUser', async (req, res) => {
+routerUser.get('/favApodList/:idUser', async (req, res) => {
     try {
         !req.params.idUser && res.status(403).json('ERROR 403, params idUser not found');
         const { idUser } = req.params;

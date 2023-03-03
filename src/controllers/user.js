@@ -1,5 +1,5 @@
 const User = require("../models/user.js") ;
-const Rover = require("../models/rover.js");
+const Apod = require("../models/apod.js");
 // import Apod from "../models/apod.js";
 
 const getUserList = async () => {
@@ -61,21 +61,21 @@ const deleteUser = async ({ id }) => {
     }
 }
 
-const updateUserFavList = async ({ id, idNasa }) => {
+const updateUserFavList = async ({ id, idApod }) => {
 
     try {
-        if(!id || !idNasa) throw new Error('id or idNasa null given, can not update favorites');
+        if(!id || !idApod) throw new Error('id or idApod null given, can not update favorites');
         const user = await getUserId(id);
         const currentFavList = user.favList;
         let newFavsList = currentFavList;
-        const existed = currentFavList.includes(idNasa);
-        const roverDB = await Rover.findById(idNasa);
+        const existed = currentFavList.includes(idApod);
+        const roverDB = await Apod.findById(idApod);
 
         if (existed) {
-            newFavsList = currentFavList.filter(item => item !== idNasa);
+            newFavsList = currentFavList.filter(item => item !== idApod);
             console.log("Eliminado de favoritos");
         } else if (roverDB) {
-            newFavsList.push(idNasa);
+            newFavsList.push(idApod);
             console.log("Añadido a favoritos");
         }
 

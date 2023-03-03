@@ -9,7 +9,6 @@ const routerUser = require('./src/routes/user.js');
 const routerAuth = require('./src/routes/auth.js');
 const routerAll = require('./src/routes/all.js');
 const routerApodsApi = require('./src/routes/syncApi.js');
-const routerApiRovers = require('./src/routes/syncApiRovers.js');
 // SERVICES
 const { ensureAuthenticated } = require('./src/middleware/auth.js');
 const connectToDb = require('./src/services/db.js');
@@ -38,7 +37,6 @@ const startApp = async () => {
     app.use('/rovers', routerRover);
     // API SYNC
     app.use('/sync-api', routerApodsApi);
-    app.use('/sync-apiRovers', routerApiRovers);
 
     try {
         await connectToDb();
