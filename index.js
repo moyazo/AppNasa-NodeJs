@@ -34,7 +34,6 @@ const startApp = async () => {
     app.use('/users', routerUser)
     app.use('/all', routerAll);
     app.use('/apods', routerApod);
-    app.use('/rovers', routerRover);
     // API SYNC
     app.use('/sync-api', routerApodsApi);
 

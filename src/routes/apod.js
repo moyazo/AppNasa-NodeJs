@@ -23,10 +23,10 @@ routerApod.get("/apodById/:id", async (req, res) => {
         if(!req.params.id) res.status(502).json('params id not found...');
         const { id } = req.params;
         const apod = await getApodId(id);
-        if(!apod) res.status(403).json('Apod not found...');
+        if(!apod) res.status(200).json('Apod not found... maybe has been deleted');
         res.status(200).json(apod);
     } catch (error) {
-        response.status(500).json('Error 500 ' + error.message);
+        res.status(500).json('Error 500 ' + error.message);
     }
 });
 

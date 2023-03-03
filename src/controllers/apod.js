@@ -19,13 +19,13 @@ const getApodId = async (id) => {
     }
 };
 
-const createApod = async (data = { title, explanation, url, date }) => {
+const createApod = async ({ title, explanation, url, date }) => {
     try {
-        if (!data) throw new Error("Can not create not data given");
-        const exists = await Apod.find(data);
+        const exists = await Apod.findOne({ where: { title: title}});
         if(exists) return 'Apod already exists';
-        const newApod = new Apod(data);
-        Apod.create(newApod);
+        const newApod = new Apod({ title, explanation, url, date });
+        const apod = await Apod.create(newApod);
+        return apod;
     } catch (error) {
         console.log('Error at create apod ' + error.message);
     }
@@ -43,10 +43,10 @@ const updateApod = async (id, data) => {
     }
 };
 
-const deleteApod = async ({ id }) => {
+const deleteApod = async (id) => {
     try {
         if (!id) throw new Error("Cant find rover by id, id given null...");
-        await Apod.findOneAndRemove({ id });
+        await Apod.findByIdAndRemove(id);
         return true;
     } catch (error) {
         console.log('Error at delete apod ' + error.message);
