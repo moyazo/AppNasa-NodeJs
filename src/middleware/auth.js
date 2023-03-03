@@ -3,45 +3,28 @@ const User = require('../models/user.js');
 
 const ensureAuthenticated = async (req, res, next) => {
 
-    if (req.path.includes('/auth')) {
-
+    if (req.path.includes('/auth'))
         return next();
 
-    }
-
-    if (!req.headers.authorization) {
-
+    if (!req.headers.authorization)
         return res.status(403).json({ message: 'You are not authenticated' });
-    }
 
     const token = req.headers.authorization.split(' ')[1];
 
-    if (!token) {
-
+    if (!token)
         return res.status(403).json({ message: 'Invalid token' });
-
-    }
 
     const payload = jsonwebtoken.decode(token, process.env.TOKEN_SECRET);
 
-    if (!payload || !payload.email) {
-
+    if (!payload || !payload.email)
         return res.status(403).json({ message: 'Invalid token' });
-    }
 
-    const user = await User.findOne({ email: payload.email })
+    const user = await User.findOne({ email: payload.email });
 
-    if (!user) {
-
+    if (!user)
         return res.status(403).json({ message: 'Invalid token' });
-    }
-
-    req.user = user
-
+    req.user = user;
     return next();
-
 }
-
-
 module.exports =  {ensureAuthenticated};
 
