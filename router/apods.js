@@ -1,91 +1,86 @@
-'use strict'
+'use strict';
 
 const express = require('express');
 const router = express.Router();
 const Apod = require('../models/apods');
 
+/**
+ * TABLE OF APODS
+ * @param {Request} req
+ * @param {Response} res
+ */
 router.get('/', async (req, res) => {
     try {
         const arrayApod = await Apod.find();
-        res.render("apods", {
-            arrayApod: arrayApod
-        })
+        res.render('apods', { arrayApod: arrayApod });
+    } catch (error) {
+        console.log(error.message);
+    }
+});
+/**
+ * APOD BY ID
+ * @param {Request} req
+ * @param {Response} res
+ */
+router.get('/detail/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        res.render('detail', {
+            apod: await Apod.findOne({ _id: id }),
+            error: false,
+        });
+    } catch (error) {
+        res.render('detail', { error: true, mensaje: 'APOD NOT FOUND' });
+    }
+});
+/**
+ * UPDATE OF APOD ENDPOINT
+ * @param {Request} req
+ * @param {Response} res
+ */
+router.put('/:id', async (req, res) => {
+    try {
+        await Apod.findByIdAndUpdate(req.params.id, req.body, {
+            useFindAndModify: false,
+        });
     } catch (error) {
         console.log(error.message)
     }
-})
-
-router.get('/crear', (req, res) => {
-    res.render('create')
-})
-
+});
+/**
+ * CREATE OF APOD VIEW
+ * @param {Request} req
+ * @param {Response} res
+ */
+router.get('/create', (req, res) => {
+    res.render('create');
+});
+/**
+ * CREATE OF APOD ENDPOINT
+ * @param {Request} req
+ * @param {Response} res
+ */
 router.post('/', async (req, res) => {
-    const data = req.body
     try {
-        const Apod = new Apod(data)
-        await Apod.save()
-        res.redirect('/')
+        const apod = new Apod(req.body);
+        await apod.save();
+        res.redirect('/');
     } catch (error) {
-        console.log('error', error.message)
+        console.log('error', error.message);
     }
-})
-
-router.get('/detalles/:id', async(req, res) => {
-    try {
-        const Apod = await Apod.findOne({ _id:req.params.id })
-        res.render('detail', {
-            apod: Apod,
-            error: false
-        })
-    } catch (error) {
-        console.log('And error has occurred', error.message)
-        res.render('details', {
-            error: true,
-            mensaje: 'APOD NOT FOUND'
-        })
-    }
-})
-
+});
+/**
+ * DELETE OF APOD ENDPOINT
+ * @param {Request} req
+ * @param {Response} res
+ */
 router.delete('/:id', async (req, res) => {
     try {
-        const Apod = await Apod.findByIdAndDelete({ _id: req.params.id });
-        if (!Apod) {
-            res.json({
-                estado: false,
-                mensaje: 'CANT DELETE APOD'
-            })
-        } else {
-            res.json({
-                estado: true,
-                mensaje: 'APOD DELETED'
-            })
-        }
+        await Apod.findByIdAndDelete({ _id: req.params.id });
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
     }
-})
-
-router.put('/detalles/:id', async (req, res) => {
-    const id = req.params.id;
-    const body = req.body;
-    console.log(id)
-    console.log('body', body)
-    try {
-        const ApodDB = await Apod.findByIdAndUpdate(
-            id, body, { useFindAndModify: false }
-        )
-        console.log(ApodDB)
-        res.json({
-            estado: true,
-            mensaje: 'Piloto editado'
-        })
-    } catch (error) {
-        console.log(error)
-        res.json({
-            estado: false,
-            mensaje: 'Problema al editar el piloto'
-        })
-    }
-})
+});
 
 module.exports = router;

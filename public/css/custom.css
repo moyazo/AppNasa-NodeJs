@@ -1,14 +1,26 @@
-
-#crear{
+#crear {
     background-color: green;
     color: white;
 }
-#edit{
+#edit {
     background-color: orange;
-    color: white;}
+    color: white;
+}
+#create {
+    background-color: green;
+    color: white;
+}
 table {
     font-size: 0.85em;
 }
 .error {
     margin: 7em;
+}
+
+img {
+    width: 50%;
+}
+
+.back {
+    background-color: red;
 }

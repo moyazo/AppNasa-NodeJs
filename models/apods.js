@@ -1,32 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
+const apodSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+        },
 
-const apodSchema = new mongoose.Schema({
+        explanation: {
+            type: String,
+            required: true,
+        },
 
-    title: {
-        type: String,
-        required: true,
+        url: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: String,
+            required: true,
+        },
     },
+    { collection: 'apods' }
+);
 
-    explanation: {
-        type: String,
-        required: true,
-
-    },
-
-    url: {
-        type: String,
-        required: true,
-
-    },
-    date: {
-        type: String,
-        required: true,
-
-    },
-}, { collection: 'apods' })
-
-const Apod = mongoose.model('ApodApi', apodSchema,);
+const Apod = mongoose.model('ApodApi', apodSchema);
 
 module.exports = Apod;
-
