@@ -1,22 +1,22 @@
 {
-  "name": "backendnasa",
-  "version": "1.0.0",
-  "description": "NASA backend project",
-  "main": "index.js",
-  "author": "GonzaloLobo",
-  "license": "MIT",
-  "scripts": {
-    "start": "nodemon index.js",
-    "startdb": "docker compose up",
-    "stopdb": "docker compose down"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0",
-    "mongodb": "^4.13.0",
-    "mongoose": "^6.8.3",
-    "node-fetch": "^3.3.0"
-  }
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.0.3",
+        "ejs": "^3.1.8",
+        "express": "^4.18.2",
+        "forms": "^1.3.2",
+        "mongoose": "^7.0.0",
+        "nodemon": "^2.0.21"
+    },
+    "name": "examen_ciente",
+    "description": "Examen Desarrollo Web Entorno Cliente",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
 }

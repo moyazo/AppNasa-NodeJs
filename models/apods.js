@@ -30,4 +30,3 @@ const Apod = mongoose.model('ApodApi', apodSchema,);
 
 module.exports = Apod;
 
-

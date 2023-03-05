@@ -1,0 +1,61 @@
+<%- include("template/cabecera", {tituloWeb: 'Fórmula 1 | Editar'})%>
+
+<div class="container w-25">
+    <h1 class="m-4 text-center">APOD DETAIL</h1>
+    <a class="btn btn-danger my-4 w-25" href="/">GO BACK</a>
+    <% if (error) { %> <%= mensaje %>
+    <a href="/" class="btn btn-danger my-2">GO BACK</a>
+    <% } %> <% if (!error) { %>
+    <form id="editar" data-id="<%= apod._id %>">
+        <input
+            type="number"
+            value="<%= apod.id %>"
+            placeholder="Id"
+            class="form-control my-2"
+            name="id"
+        />
+        <input
+            type="text"
+            value="<%= apod.nombre %>"
+            placeholder="TITLE"
+            class="form-control my-2"
+            name="title"
+        />
+        <input
+            type="text"
+            value="<%= apod.edad %>"
+            placeholder="EXPLANATION"
+            class="form-control my-2"
+            name="explanation"
+        />
+        <button id="edit" class="btn" type="submit">UPDATE</button>
+    </form>
+    <% } %>
+</div>
+
+<script>
+    const formEditar = document.querySelector("#editar");
+    formEditar.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = formEditar.elements["id"].value;
+        const title = formEditar.elements["title"].value;
+        const explanation = formEditar.elements["explanation"].value;
+        const _id = formEditar.dataset.id
+        const newData = {
+                id,
+                title,
+                explanation,
+            }
+        const response = await fetch(`/detalles/${_id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newData)
+        });
+        const data = await response.json();
+        if (data.estado) {
+            location.href = "/";
+        } 
+    });
+</script>

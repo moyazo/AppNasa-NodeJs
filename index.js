@@ -1,51 +1,32 @@
-// IMPORTS
-const express = require('express');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-dotenv.config();
-// ROUTES
-const routerApod = require('./src/routes/apod.js');
-const routerUser = require('./src/routes/user.js');
-const routerAuth = require('./src/routes/auth.js');
-const routerAll = require('./src/routes/all.js');
-const routerApodsApi = require('./src/routes/syncApi.js');
-// SERVICES
-const { ensureAuthenticated } = require('./src/middleware/auth.js');
-const connectToDb = require('./src/services/db.js');
+"use strict";
 
-/**
- * *startApp()*
- * *This function objetive is that when you write the command yarn start or npm start, the app start up.*
- * */
-const startApp = async () => {
-    const app = express();
-    const port = process.env.PORT;
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+require("dotenv").config();
+const app = express();
+const port = process.env.PORT || 3000;
 
-    app.use(bodyParser.json());
-    app.use(express.json());
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-    // MIDDLEWARE
-    app.use(ensureAuthenticated)
-    // AUTHENTICATION
-    app.use('/auth', routerAuth)
-    // ROUTES OF COLLECTIONS(CRUD)
-    app.use('/users', routerUser)
-    app.use('/all', routerAll);
-    app.use('/apods', routerApod);
-    // API SYNC
-    app.use('/sync-api', routerApodsApi);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(__dirname + "/public/"));
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views/");
+app.use("/", require("./router/apods"));
 
-    try {
-        await connectToDb();
-        app.listen(port, () => {
-            console.log(`App listening on port ${port}`);
-        })
-    } catch (error) {
-        console.log('Can not start up the App: ' + error.message)
-        process.exit(1)
-    }
-}
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@nasa-app.hficxsv.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`;
 
-startApp()
+mongoose
+    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("DB CONNECTED"))
+    .catch((e) => console.log(e.message));
+
+app.use((req, res) => {
+    res.status(404).render("404", {
+        title: "Error 404",
+        des: "Page not Found",
+    });
+})
+.listen(port);
+
+console.log("APP RUNNING ON PORT 8000");
