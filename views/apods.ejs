@@ -1,9 +1,7 @@
-<%- include("template/cabecera", {tituloWeb: 'Fórmula 1 | Pilotos'})%>
+<%- include("template/header")%>
 
 <div class="container-fluid">
     <h1 class="m-4 text-center">APOD TABLE</h1>
-    <a id="crear" class="btn my-4" href="/crear">CREATE APOD</a>
-
     <table class="table text-center w-75">
         <thead>
             <tr>
@@ -17,12 +15,13 @@
             <tr>
                 <th scope="row"><%= apod.id %></th>
                 <td><%= apod.title %></td>
-                <td><%= apod.explanation %> </td>
+                <td><%= apod.explanation %></td>
+                <td><img src="<%= apod.url %>" alt="" /></td>
                 <td>
                     <a
                         id="edit"
                         class="btn btn-sm"
-                        href="/detalles/<%= apod._id %>"
+                        href="/detail/<%= apod._id %>"
                         >Editar</a
                     >
                     <button
@@ -39,21 +38,20 @@
             <% }) %> <% } %>
         </tbody>
     </table>
+    <a id="crear" class="btn my-4" href="/create">CREATE APOD</a>
 </div>
 
-<script defer>
+<script>
     async function deleteApod(button) {
         const eliminar = button;
         try {
             const response = await fetch(`/${eliminar.dataset.id}`, {
-                method: "delete",
+                method: "DELETE",
             });
             const data = await response.json();
-            if (data.estado) {
-                location.href = "/";
-            }
+            if (data.estado) location.href = "/";
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 </script>
