@@ -1,0 +1,59 @@
+<%- include("template/cabecera", {tituloWeb: 'Fórmula 1 | Pilotos'})%>
+
+<div class="container-fluid">
+    <h1 class="m-4 text-center">APOD TABLE</h1>
+    <a id="crear" class="btn my-4" href="/crear">CREATE APOD</a>
+
+    <table class="table text-center w-75">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">EXPLANATION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(arrayApod.length > 0) { %> <% arrayApod.forEach(apod => { %>
+            <tr>
+                <th scope="row"><%= apod.id %></th>
+                <td><%= apod.title %></td>
+                <td><%= apod.explanation %> </td>
+                <td>
+                    <a
+                        id="edit"
+                        class="btn btn-sm"
+                        href="/detalles/<%= apod._id %>"
+                        >Editar</a
+                    >
+                    <button
+                        id="eliminar<% apod._id %>"
+                        class="btn btn-danger btn-sm"
+                        data-id="<%= apod._id %>"
+                        onclick="deleteApod(this)"
+                    >
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+
+            <% }) %> <% } %>
+        </tbody>
+    </table>
+</div>
+
+<script defer>
+    async function deleteApod(button) {
+        const eliminar = button;
+        try {
+            const response = await fetch(`/${eliminar.dataset.id}`, {
+                method: "delete",
+            });
+            const data = await response.json();
+            if (data.estado) {
+                location.href = "/";
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+</script>

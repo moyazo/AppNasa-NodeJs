@@ -1,0 +1,43 @@
+<%- include("template/cabecera")%>
+
+<div class="container w-25">
+    <h2 class="m-4 text-center">
+        Create Apod
+    </h2>
+    <a class="btn btn-danger my-4 w-25" href="/">GO BACK</a>
+    <form action="/" class="my-2 " method="POST">
+        <input
+            type="number"
+            placeholder="Id"
+            class="form-control my-2"
+            name="id"
+        />
+        <input
+            type="text"
+            placeholder="TITLE"
+            class="form-control my-2"
+            name="title"
+        />
+        <input
+            type="text"
+            placeholder="EXPLANATION"
+            class="form-control my-2"
+            name="explanation"
+        />
+        <input
+            type="text"
+            placeholder="DATE"
+            class="form-control my-2"
+            name="date"
+        />
+        <input
+            type="file"
+            placeholder="IMAGE"
+            class="form-control my-2"
+            name="url"
+        />
+        <button type="submit" class="btn">Crear</button>
+    </form>
+</div>
+
+
